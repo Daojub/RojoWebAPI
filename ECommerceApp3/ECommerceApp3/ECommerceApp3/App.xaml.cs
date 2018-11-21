@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECommerceApp3.Pages;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,11 +8,13 @@ namespace ECommerceApp3
 {
     public partial class App : Application
     {
+        public static NavigationPage Navigator { get; internal set; }
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new MasterPage();
         }
 
         protected override void OnStart()
