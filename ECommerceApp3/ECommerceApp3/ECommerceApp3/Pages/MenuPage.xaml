@@ -7,8 +7,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Menu Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand"
                    TextColor="{StaticResource MenuFontColor}"/>
         </StackLayout>
     </ContentPage.Content>

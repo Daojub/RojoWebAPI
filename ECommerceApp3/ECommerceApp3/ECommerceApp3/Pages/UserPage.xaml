@@ -9,8 +9,7 @@
             <Label Text="User Page"
                    VerticalOptions="CenterAndExpand" 
                    HorizontalOptions="CenterAndExpand"
-                   TextColor="{StaticResource FontColor}"
-                />
+                   TextColor="{StaticResource FontColor}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
