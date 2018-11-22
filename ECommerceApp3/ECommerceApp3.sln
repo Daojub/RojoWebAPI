@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceApp3.Android", "EC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceApp3.iOS", "ECommerceApp3\ECommerceApp3.iOS\ECommerceApp3.iOS.csproj", "{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceApp3", "ECommerceApp3\ECommerceApp3\ECommerceApp3.csproj", "{A5342AB1-6C0E-45CA-B195-CEE4C38BAC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceApp3", "ECommerceApp3\ECommerceApp3\ECommerceApp3.csproj", "{A5342AB1-6C0E-45CA-B195-CEE4C38BAC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,7 +80,6 @@ Global
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.AppStore|iPhoneSimulator.Deploy.0 = AppStore|iPhoneSimulator
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.Debug|Any CPU.Deploy.0 = Debug|iPhoneSimulator
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{EA7DCEBF-D904-4F2A-AB89-2FD75B7CEAB8}.Debug|iPhone.Build.0 = Debug|iPhone

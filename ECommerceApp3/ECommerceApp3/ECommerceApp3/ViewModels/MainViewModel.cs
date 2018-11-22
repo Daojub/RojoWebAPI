@@ -23,7 +23,7 @@ namespace ECommerceApp3.ViewModels
         #region Methods
         private void LoadMenu()
         {
-             Menu.Add(new MenuItemViewModel
+            Menu.Add(new MenuItemViewModel
             {
                 Icon = "ic_action_product.png",
                 PageName = "ProductsPages",
