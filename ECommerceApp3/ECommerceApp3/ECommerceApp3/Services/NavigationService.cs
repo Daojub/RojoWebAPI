@@ -1,8 +1,5 @@
-﻿
-using ECommerceApp3.Pages;
+﻿using ECommerceApp3.Pages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ECommerceApp3.Services
@@ -11,7 +8,6 @@ namespace ECommerceApp3.Services
     {
         public async Task Navigate(string pageName)
         {
-
             App.Master.IsPresented = false;
 
             switch(pageName)
@@ -40,6 +36,11 @@ namespace ECommerceApp3.Services
                 default:
                     break;
             }
+        }
+
+        internal void SetMainPage()
+        {
+            App.Current.MainPage = new MasterPage();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ECommerceApp3
         public App()
         {
             InitializeComponent();
-            MainPage = new MasterPage();
+            MainPage = new LoginPage();
         }
         #endregion
 
