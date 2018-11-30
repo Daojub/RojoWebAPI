@@ -50,13 +50,35 @@ namespace ECommerce.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CompanyId,Name,Phone,Address,Logo,DepartmentId,CityId")] Company company)
+        public ActionResult Create(Company company)
         {
             if (ModelState.IsValid)
             {
                 db.Companies.Add(company);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+
+                    var folder = "~/Content/Logos";
+                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    if (company.LogoFile != null)
+                    {
+                        var response  = FilesHelper.UploadPhoto(company.LogoFile, folder, file);
+                        if (response)
+                        {
+                            var pic = string.Format("{0}/{1}", folder, file);
+                            company.Logo = pic;
+                            db.Entry(company).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+
             }
 
             ViewBag.CityId = new SelectList(CombosHelper.GetCities(), "CityId", "Name", company.CityId);
@@ -71,7 +93,7 @@ namespace ECommerce.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            var company = db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -86,13 +108,34 @@ namespace ECommerce.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,Name,Phone,Address,Logo,DepartmentId,CityId")] Company company)
+        public ActionResult Edit(Company company)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (company.LogoFile != null)
+                {
+                    var pic = string.Empty;
+                    var folder = "~/Content/Logos";
+                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    var response = FilesHelper.UploadPhoto(company.LogoFile, folder, file);
+                if (response)
+                    {
+                        pic = string.Format("{0}/{1}", folder, file);
+                        company.Logo = pic;
+                    }
+                                            
+                        db.Entry(company).State = EntityState.Modified;
+                        try
+                        {
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        catch (Exception ex)
+                        {
+                            ModelState.AddModelError(string.Empty, ex.Message);
+                        }
+                    
+                }
             }
             ViewBag.CityId = new SelectList(CombosHelper.GetCities(), "CityId", "Name", company.CityId);
             ViewBag.DepartmentId = new SelectList(CombosHelper.GetDepartments(), "DepartmentId", "Name", company.DepartmentId);
