@@ -30,6 +30,9 @@ namespace ECommerce.Models
         [DataType(DataType.ImageUrl)]
         public string Logo { get; set; }
 
+        [NotMapped]
+        public HttpPostedFileBase LogoFile { get; set; }
+
         [Required(ErrorMessage = "The field {0} is required")]
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
         public int DepartmentId { get; set; }
@@ -37,9 +40,6 @@ namespace ECommerce.Models
         [Required(ErrorMessage = "The field {0} is required")]
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
         public int CityId { get; set; }
-
-        [NotMapped]
-        public HttpPostedFileBase LogoFile { get; set; }
 
         public virtual Department Department { get; set; }
 
@@ -49,5 +49,8 @@ namespace ECommerce.Models
 
         public virtual ICollection<Category> Categories { get; set; }
 
+        public virtual ICollection<Tax> taxes { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

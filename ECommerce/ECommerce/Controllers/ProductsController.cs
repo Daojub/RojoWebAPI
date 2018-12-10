@@ -6,16 +6,17 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ECommerce.Classes;
 using ECommerce.Models;
 
 namespace ECommerce.Controllers
 {
     [Authorize(Roles = "User")]
-    public class CategoriesController : Controller
+    public class ProductsController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
-           
-        // GET: Categories
+
+        // GET: Products
         public ActionResult Index()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -23,111 +24,118 @@ namespace ECommerce.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            var categories = db.Categories.Where(c => c.CompanyId == user.CompanyId);
-            return View(categories.ToList());
+            var products = db.Products
+                .Include(p => p.Category)
+                .Include(p => p.Tax)
+                .Where(p => p.CompanyId == user.CompanyId);
+            return View(products.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(product);
         }
 
-        // GET: Categories/Create
+        // GET: Products/Create
         public ActionResult Create()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var category = new Category { CompanyId = user.CompanyId };
-            return View(category);
+
+            ViewBag.CategoryId = new SelectList(CombosHelper.GetCategories(user.CompanyId), "CategoryId", "Description");
+            ViewBag.TaxId = new SelectList(CombosHelper.GetTaxes(user.CompanyId), "TaxId", "Description");
+            var product = new Product { CompanyId = user.CompanyId };
+            return View(product);
         }
 
-        // POST: Categories/Create
+        // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(Product product)
         {
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
-            return View(category);
+            ViewBag.CategoryId = new SelectList(CombosHelper.GetCategories(user.CompanyId), "CategoryId", "Description", product.CategoryId);
+            ViewBag.TaxId = new SelectList(CombosHelper.GetTaxes(user.CompanyId), "TaxId", "Description", product.TaxId);
+            return View(product);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            
-            return View(category);
+            ViewBag.CategoryId = new SelectList(CombosHelper.GetCategories(user.CompanyId), "CategoryId", "Description", product.CategoryId);
+            ViewBag.TaxId = new SelectList(CombosHelper.GetTaxes(user.CompanyId), "TaxId", "Description", product.TaxId);
+            return View(product);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Products/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(Product product)
         {
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
-            return View(category);
+            ViewBag.CategoryId = new SelectList(CombosHelper.GetCategories(product.CompanyId), "CategoryId", "Description", product.CategoryId);
+            ViewBag.TaxId = new SelectList(CombosHelper.GetTaxes(user.CompanyId), "TaxId", "Description", product.TaxId);
+            return View(product);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            var product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(product);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

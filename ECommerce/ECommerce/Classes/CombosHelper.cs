@@ -1,5 +1,6 @@
 ﻿using ECommerce.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -49,6 +50,30 @@ namespace ECommerce.Classes
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        public static List<Category> GetCategories(int companyId)
+        {
+            var categories = db.Categories.Where(c => c.CompanyId == companyId).ToList();
+            categories.Add(new Category
+            {
+                CategoryId = 0,
+                Description = "[Select a category...]"
+            });
+
+            return categories = categories.OrderBy(d => d.Description).ToList();
+        }
+
+        public static List<Tax> GetTaxes(int companyId)
+        {
+            var taxes = db.Taxes.Where(c => c.CompanyId == companyId).ToList();
+            taxes.Add(new Tax
+            {
+                TaxId = 0,
+                Description = "[Select a tax...]"
+            });
+
+            return taxes = taxes.OrderBy(d => d.Description).ToList();
         }
     }
 }
