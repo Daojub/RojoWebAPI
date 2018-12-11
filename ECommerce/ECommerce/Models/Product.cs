@@ -51,15 +51,21 @@ namespace ECommerce.Models
         public string Image { get; set; }
 
         [NotMapped]
+        [Display(Name = "Image")]
         public HttpPostedFileBase ImageFile { get; set; }
         
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public double Stock { get { return Inventories.Sum(i => i.Stock); } }
 
         public virtual Company Company { get; set; }
 
         public virtual Category Category { get; set; }
 
         public virtual Tax Tax { get; set; }
+
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }
