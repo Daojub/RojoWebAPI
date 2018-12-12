@@ -7,56 +7,62 @@ using System.Web;
 
 namespace ECommerce.Models
 {
-    public class Company
+    public class Customer
     {
         [Key]
+        public int CustomerId { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required")]
+        [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
+        [Display(Name = "company")]
         public int CompanyId { get; set; }
+                          
+        [Required(ErrorMessage = "The field {0} is required")]
+        [MaxLength(256, ErrorMessage = "The field {0} must be maximun {1} characters length")]
+        [Display(Name = "E-mail")]
+        [Index("Customer_UserName_Index", IsUnique = true)]
+        [DataType(DataType.EmailAddress)]
+        public string UserName { get; set; }
+                          
+        [Required(ErrorMessage = "The field {0} is required")]
+        [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")]
-        [Display(Name = "Company")]
-        [Index("Company_Name_Index", IsUnique = true)]
-        public string Name { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         [MaxLength(20, ErrorMessage = "The field {0} must be maximun {1} characters length")]
-        [DataType(DataType.PhoneNumber) ]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         [MaxLength(100, ErrorMessage = "The field {0} must be maximun {1} characters length")]
         public string Address { get; set; }
 
-        [DataType(DataType.ImageUrl)]
-        public string Logo { get; set; }
-
-        [NotMapped]
-        public HttpPostedFileBase LogoFile { get; set; }
-
         [Required(ErrorMessage = "The field {0} is required")]
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
+        [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
+        [Display(Name = "City")]
         public int CityId { get; set; }
-
+               
+        [Display(Name = "Customer")]
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+         
         public virtual Department Department { get; set; }
 
         public virtual City City { get; set; }
-        
-        public virtual ICollection<User> Users { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
-
-        public virtual ICollection<Tax> taxes { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; }
-
-        public virtual ICollection<Warehouse> Warehouses { get; set; }
-
-        public virtual ICollection<Customer> Customers { get; set; }
+        public virtual Company Company { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
+
     }
 }

@@ -23,6 +23,17 @@ namespace ECommerce.Classes
             return departments = departments.OrderBy(d => d.Name).ToList();
         }
 
+        internal static List<Product> GetProducts(int companyId)
+        {
+            var products = db.Products.Where(c => c.CompanyId == companyId).ToList();
+            products.Add(new Product
+            {
+                ProductId = 0,
+                Description = "[Select a product...]"
+            });
+            return products.OrderBy(d => d.Description).ToList();
+        }
+
         public static List<City> GetCities()
         {
             var cities = db.Cities.ToList();
@@ -62,6 +73,18 @@ namespace ECommerce.Classes
             });
 
             return categories = categories.OrderBy(d => d.Description).ToList();
+        }
+
+        internal static List<Customer> GetCustomers(int companyId)
+        {
+            var customers = db.Customers.Where(c => c.CompanyId == companyId).ToList();
+            customers.Add(new Customer
+            {
+                CustomerId = 0,
+                FirstName = "[Select a customer...]"
+            });
+
+            return customers.OrderBy(d => d.FirstName).ThenBy(c => c.LastName).ToList();
         }
 
         public static List<Tax> GetTaxes(int companyId)
