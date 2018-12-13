@@ -18,6 +18,5 @@ namespace ECommerce.Models
         [Range(0, double.MaxValue, ErrorMessage = "You must enter greater than {0} values in {1}")]
 
         public double Quantity { get; set; }
-
     }
 }

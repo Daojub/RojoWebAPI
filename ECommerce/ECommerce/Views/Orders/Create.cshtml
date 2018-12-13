@@ -1,10 +1,10 @@
 ﻿@model ECommerce.Models.NewOrderView
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "New Order";
 }
 
-<h2>Create</h2>
+<h2>New</h2>
 
 @using (Html.BeginForm())
 {
@@ -44,7 +44,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input type="submit" value="Save Order" class="btn btn-primary" />
                         @Html.ActionLink("Add Product", "AddProduct", new { }, new { @class = "btn btn-warning" })
                         @Html.ActionLink("Back to orders", "Index", new { }, new { @class = "btn btn-success" })
                     </div>
@@ -124,7 +124,6 @@ else
                 <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
             </td>
         </tr>
-
     </table>
 }
 

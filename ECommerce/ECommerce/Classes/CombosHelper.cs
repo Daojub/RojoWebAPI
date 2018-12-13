@@ -23,7 +23,7 @@ namespace ECommerce.Classes
             return departments = departments.OrderBy(d => d.Name).ToList();
         }
 
-        internal static List<Product> GetProducts(int companyId)
+        public static List<Product> GetProducts(int companyId)
         {
             var products = db.Products.Where(c => c.CompanyId == companyId).ToList();
             products.Add(new Product
@@ -83,7 +83,6 @@ namespace ECommerce.Classes
                 CustomerId = 0,
                 FirstName = "[Select a customer...]"
             });
-
             return customers.OrderBy(d => d.FirstName).ThenBy(c => c.LastName).ToList();
         }
 
