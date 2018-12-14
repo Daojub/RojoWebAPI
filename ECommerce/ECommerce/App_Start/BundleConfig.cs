@@ -17,19 +17,17 @@ namespace ECommerce
             // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará
             // para la producción, use la herramienta de compilación disponible en https://modernizr.com para seleccionar solo las pruebas que necesite.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                                    "~/Scripts/moment.js",
-                                    "~/Scripts/bootstrap.js",
-                                    "~/Scripts/respond.js",
-                                    "~/Scripts/bootstrap-datetimepicker.js"));
-
+                        "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                            "~/Scripts/moment.js",
+                            "~/Scripts/bootstrap.js",
+                            "~/Scripts/bootstrap-datetimepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                                    "~/Content/bootstrap.css",
-                                    "~/Content/site.css",
-                                    "~/Content/bootstrap-datetimepicker.css"));
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-datetimepicker.css"));
         }
     }
 }
