@@ -124,7 +124,7 @@ namespace ECommerce.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(NewOrderView view)
         {
-            view.Details = db.OrderDetailTmps.Where(odt => odt.UserName == User.Identity.Name).ToList();
+           
             if (ModelState.IsValid)
             {
                 var response = MovementsHelper.NewOrder(view,User.Identity.Name);
@@ -134,7 +134,7 @@ namespace ECommerce.Controllers
                 }
                 ModelState.AddModelError(string.Empty, response.Message);
             }
-           
+            view.Details = db.OrderDetailTmps.Where(odt => odt.UserName == User.Identity.Name).ToList();
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomers(user.CompanyId), "CustomerId", "FullName");
             return View(view);
